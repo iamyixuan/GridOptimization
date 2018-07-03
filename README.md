@@ -6,11 +6,11 @@ More details at:
 
 # Content
 
-* [Data Description](https://github.com/sunyx1223/GridOptimization#data-description)
-* [Data Prepocessing](https://github.com/sunyx1223/GridOptimization#data-prepocessing)
-* [First Look Into the Data](https://github.com/sunyx1223/GridOptimization#first-look-into-the-data)
-* [Multi-target Regression: Problem transformation](https://github.com/sunyx1223/GridOptimization#multi-target-regression)
-* [Neural Networks](https://github.com/sunyx1223/GridOptimization#neural-networks)
+* [Data Description](#data-description)
+* [Data Prepocessing](#data-prepocessing)
+* [First Look Into the Data](#first-look-into-the-data)
+* [Multi-target Regression: Problem transformation](#multi-target-regression)
+* [Neural Networks](#neural-networks)
 
 ## Data Description
 IEEE 14-Bus (100 scenarios) dataset is employed. It contrains 100 folders labeled *scenario_1* to *scenario_100*. These scenarios are each independent instances with no coupling to any of the other scenarios. Each scenario folder contrains the following files:
