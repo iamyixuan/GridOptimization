@@ -30,7 +30,7 @@ where only `powersystem.raw` and `solution1.txt` are used in the machine learnin
 `solution1.txt`contains the required output for the base solution that is produced by the GAMS reference implmentation.
 
 ## Data Prepocessing
-1.The RAW file contains data from different parts into different rows that are not regularly distributed. The first step is to extract the data of parts into a list by 
+1. The RAW file contains data from different parts into different rows that are not regularly distributed. The first step is to extract the data of parts into a list by 
 ```python
 def extractCertainLines(startLine, endLine, scenarioNum):
 	dir_path = '/home/yixuan/Downloads/Phase_0_IEEE14'
@@ -97,7 +97,34 @@ def cleanData(filename):
   ```
   The data after cleaning consists of 100 rows and 52 columns (42 features and 10 targets).
 ## First Look Into the Data
-
+Due to the limition of sample size and the nature of a multi-target regression problem, it is important to learn the correlation between features, targets as well as features and targets. If two features have strong correlation, taking out one of them could be a good way to reduce the dimension, preventing overfitting. If two or more targets are strongly correlated, one should consider algorithm adaptation methods to capture the relations between targets. 
+```python
+dataset, colName = cleanData(filename)
+X = dataset.iloc[:,:42]
+y = dataset.iloc[:,42:]
+plt.matshow(dataset.corr())
+plt.savefig("correlation.jpg", dpi = 1000, format = 'jpg')
+```
+![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/correlation.jpg)
+The correlation matrix does not show any strong correlations between features, targets or between features and targets. Thus, further feature selection techniques have not been employed so far, and the correlation between features indicates problem transformation methods may be feasible, where a muilt-target regression problem is treated as several independent single-target problems. 
 ## Multi-target Regression
+The problem transformation is achieved by using `sklearn.multioutput.MultiOutputRegressor` , where the user choose an algorithm for single-target regression problem and `MultiOutputRegressor` puts the results of sub-problems together and evaluates them. The machine learning algorithms for single-target are:
+* `LinearRegression`
+* `RandomForest`
+* `RidgeRegression`
+* `LassoRegression`
+* `SVR`
+* `BaysianRidge`
+
+Unfortunately, all of the models show severe overfitting. The following table shows the results.
+
+| Algorithms | Coefficient of determination |
+| ---------- |:--------------------------:|
+| Linear Regression | -0.2148 |
+| Random Forest | -0.2148 |
+| Ridge Regression| 0.000 |
+| Lasso Regression | 0.000 |
+| Support Vector Regression | 0.000 |
+| Baysian Ridge Regression | 0.000 |
 
 ## Neural Networks
