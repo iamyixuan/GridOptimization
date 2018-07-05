@@ -204,5 +204,20 @@ In the training process, mean squared error loss function is employed and Adam o
 
 `Train loss: 2.8762033 & Test loss: 1584.9363`
 
-In order to address the overfitting problem, dropout layers are used between fully connected layers with a dropout rate as 0.5. This solved the overfitting problem, however; the model is not able to learn much from the data for the training loss stops converging after 50 epochs. 
-`
+In order to address the overfitting problem, dropout layers are used between fully connected layers with a dropout rate as 0.5. This solves the overfitting problem, however; the model is not able to learn much from the data for the training loss stops converging after 50 epochs. 
+```
+Train loss: 1013.13104, Test Loss: 1026.6914
+```
+The training loss and test loss would just oscillate around these numbers for more epochs. The best results show up at epoch 
+28, where
+```
+Train loss: 929.6456, Test Loss: 936.4531
+```
+This model is still not what is wanted, since it still can not fit the data well enough. Notice that there are only 80 samples used in training and 20 in testing (100 data points in total), which it's too small for a dataset that has 42 features. 
+
+The next step done is to use the boostrapping resampling technique to resample data points from the empirical distribution. The sample size is increased to 1000 after resampling. Although the resampled data does not make any sense to the real world, the predictive power of the model is drastically improved.
+```
+Train loss: 44.991547, Test Loss: 51.1006
+```
+
+The major problem encountered at this stage, from my perspective, is the limited sample size. It is not big enough for the models to learn the pattern well. 
