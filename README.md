@@ -66,7 +66,7 @@ def makeFeautures(scenarioNum):
 			pass
 	return sampleFeatures
   ```
-There are numerical as well as categorical values in the dataset. The `try except` snippet converts all the numerical values from strings to floats and leaves categorical values strings. Similar procedure can be applied on target values without having to leaving categorical values for there is none.
+There are numerical as well as categorical values in the dataset. The `try except` snippet converts all the numerical values from strings to floats and leaves categorical values strings. Similar procedure can be applied on target values without having to leave categorical values for there is not such values.
 
 3. Save the first-processed data into a csv file.
 ```python
@@ -116,15 +116,93 @@ The problem transformation is achieved by using `sklearn.multioutput.MultiOutput
 * `SVR`
 * `BaysianRidge`
 
-Unfortunately, all of the models show severe overfitting. The following table shows the results.
+Unfortunately, all of the models show severe overfitting. The following table shows the results. 
 
 | Algorithms | Coefficient of determination |
 | ---------- |:--------------------------:|
 | Linear Regression | -0.2148 |
 | Random Forest | -0.2148 |
-| Ridge Regression| 0.000 |
-| Lasso Regression | 0.000 |
-| Support Vector Regression | 0.000 |
-| Baysian Ridge Regression | 0.000 |
+| Ridge Regression|  -1.066 |
+| Lasso Regression | -0.1698 |
+| Support Vector Regression (RBF) | -0.0963 |
+| Baysian Ridge Regression | -0.1049 |
+
+The coefficients of determination of testing set from the models in the table are all negative, indicating the trained models cannot make reasonable predictions on unseen data at all. Therefore, the data may contain complex non-linearity between features and targets that needs a deep model to explore.
 
 ## Neural Networks
+A fully connected deep neural network is built for this problem, since it is a multi-target regression where the targets do not have much of a correlation with each other. The input layer consists of 42 nodes as there are 42 features. The output layer contains 10 nodes representing 10 outputs for each sample. In between, there are 4 hidden layers that contain 1000, 800, 500, 200 nodes, respectively. 
+
+The network is constructed using Tensorflow, a deep learning framework.
+1. Create placeholders for data to feed in and batch data from Dataset class.
+```python
+X = tf.placeholder(tf.float32, shape = (None, n_input), name = 'X')
+y = tf.placeholder(tf.float32, shape = (None, n_output), name = 'y')
+batch_size = tf.placeholder(tf.int64)
+
+data = tf.data.Dataset.from_tensor_slices((X, y)).batch(batch_size).repeat()
+iter = data.make_initializable_iterator()
+features, labels = iter.get_next()
+```
+2. Define the arithmetic between fully connected layers
+```python
+def neruon_layer(X, n_neurons, name, activition = None):
+	with tf.name_scope(name):
+		n_input = int(X.get_shape()[1])
+		stddev = 2/np.sqrt(n_input)
+		init = tf.truncated_normal((n_input, n_neurons), stddev = stddev)
+		W = tf.Variable(init, name = 'kernel')
+		b = tf.Variable(tf.zeros([n_neurons]), name = 'bias')
+		Z = tf.matmul(X,W) + b
+		if activition is not None:
+			return activition(Z)
+		else:
+			return Z
+```
+3. Construct the body of the network
+```python
+with tf.name_scope('dnn'):
+	hidden1 = neruon_layer(features, n_hidden1, name = 'hidden1', activition = tf.nn.relu)
+	dropout = tf.nn.dropout(hidden1, keep_prob = 0.5)
+	hidden2 = neruon_layer(dropout, n_hidden2, name = 'hidden2', activition = tf.nn.relu)
+	dropout2 = tf.nn.dropout(hidden2, keep_prob = 0.5)
+	hidden3 = neruon_layer(dropout2, n_hidden3, name = 'hidden3', activition = tf.nn.relu)
+	dropout3 = tf.nn.dropout(hidden3, keep_prob = 0.5)
+	hidden4 = neruon_layer(dropout3, n_hidden4, name = 'hidden4', activition = tf.nn.relu)
+	dropout4 = tf.nn.dropout(hidden4, keep_prob = 0.5)
+	output = neruon_layer(dropout, n_output, name = 'output', activition = None)
+```
+4. Specify the loss function
+```python
+with tf.name_scope('loss'):
+	mse = tf.losses.mean_squared_error(labels = labels, predictions = output)
+```
+5. Training operation (minimizing the loss)
+```python
+with tf.name_scope('train'):
+	optimizer = tf.train.AdamOptimizer()
+	training_op = optimizer.minimize(mse)
+```
+
+6. Execution 
+```python
+initializer = tf.global_variables_initializer()
+
+with tf.Session() as sess:
+	sess.run(initializer)
+	for epoch in range(n_epoch):
+		sess.run(iter.initializer, feed_dict = {X: X_train, y: y_train, batch_size: BATCH_SIZE})
+		train_error = []
+		for i in range(num_batches):
+			sess.run(training_op)
+			train_error.append(mse.eval())
+			
+		sess.run(iter.initializer, feed_dict = {X: X_test, y: y_test, batch_size: len(y_test)})
+		acc_test = acc.eval()
+		print(epoch + 1, "Train loss", np.mean(train_error), "Test Loss: %.4f" % acc_test)
+```
+In the training process, mean squared error loss function is employed and Adam optimizer is used. The initial training (without dropout layers) leads to a severe overfiting, where
+
+`Train loss: 2.8762033 & Test loss: 1584.9363`
+
+In order to address the overfitting problem, dropout layers are used between fully connected layers with a dropout rate as 0.5. This solved the overfitting problem, however; the model is not able to learn much from the data for the training loss stops converging after 50 epochs. 
+`
