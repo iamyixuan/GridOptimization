@@ -13,7 +13,7 @@ More details at:
 * [Neural Networks](#neural-networks)
 
 ## Data Description
-IEEE 14-Bus (100 scenarios) dataset is employed. It contains 100 folders labeled *scenario_1* to *scenario_100*. These scenarios are each independent instances with no coupling to any of the other scenarios. Each scenario folder contrains the following files:
+IEEE 14-Bus (100 scenarios) dataset is employed. It contains 100 folders labeled *scenario_1* to *scenario_100*. These scenarios are each independent instances with no coupling to any of the other scenarios. Each scenario folder contains the following files:
 * powersystem.raw
 * generator.csv
 * contingency.csv
