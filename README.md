@@ -221,3 +221,13 @@ Train loss: 44.991547, Test Loss: 51.1006
 ```
 
 The major problem encountered at this stage, from my perspective, is the limited sample size. It is not big enough for the models to learn the pattern well. 
+
+### Features used in the models
+1. Bus data is the same for all samples, so it is taken out.
+2. Load data: column 6 & 7. (11 * 2 = 22 starting from 2 to 14)
+3. Fixed shunt data is the same for all samples, so it is taken out.
+4. Generator data: column 5 & 6 & 18 & 19 (5 * 4 = 20).
+5. Branch data is the same for all samples, so it is taken out.
+6. Transformer data is the same for all samples, so it is taken out.
+
+Other data categories contain few data, so they are not taken into consideration.
