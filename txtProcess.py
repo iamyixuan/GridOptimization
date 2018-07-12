@@ -2,11 +2,15 @@ import numpy as np
 import pandas as pd
 import os
 
-filenames = os.listdir('/Users/yixuansun/Documents/Research/PNNLrelated/14BUS_Modifited/Phase_0_Modified_IEEE14')
+
+
+
+path = '/Users/yixuansun/Documents/Research/PNNLrelated/14BUS_Modifited/Phase_0_Modified_IEEE14'
+filenames = os.listdir(path)
 filenames.remove('scorepara.csv')
 
 def extractCertainLines(startLine, endLine, scenarioNum):
-	dir_path = '/Users/yixuansun/Documents/Research/PNNLrelated/14BUS_Modifited/Phase_0_Modified_IEEE14'
+	dir_path = path
 	dir_path = os.path.join(dir_path, scenarioNum)
 	txt_file = 'powersystem.raw'
 	features = []
@@ -20,7 +24,7 @@ def extractCertainLines(startLine, endLine, scenarioNum):
 
 
 def findlines(scenarioNum):
-	dir_path = '/Users/yixuansun/Documents/Research/PNNLrelated/14BUS_Modifited/Phase_0_Modified_IEEE14'
+	dir_path = path
 	dir_path = os.path.join(dir_path, scenarioNum)
 	txt_file = 'powersystem.raw'
 	headerRow = []
@@ -38,7 +42,7 @@ def findlines(scenarioNum):
 
 
 def extractLines(startLine, endLine, scenarioNum):
-	dir_path = '/Users/yixuansun/Documents/Research/PNNLrelated/14BUS_Modifited/Phase_0_Modified_IEEE14'
+	dir_path = path
 	dir_path = os.path.join(dir_path, scenarioNum)
 	txt_file = 'solution1.txt'
 	features = []
