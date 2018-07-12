@@ -266,3 +266,26 @@ def integrateFeat(scenarioNum):
 			pass
 	return sampleFeatures
 ```
+### Performed feature importance visualization based on Random Forest
+Bagging tree based algorithms like Random Forest can be used to investigate feature importance. In this project, considering there are 10 targets, the investigation is conducted for each features-target pair. Feature importances vary with respect to different targets. Here are the feature importance plots
+
+For target #1
+![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/Feature_importance_plot/feat_imp1.jpg)
+For target #2
+![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/Feature_importance_plot/feat_imp2.jpg)
+For target #3
+![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/Feature_importance_plot/feat_imp3.jpg)
+For target #4
+![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/Feature_importance_plot/feat_imp4.jpg)
+For target #5
+![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/Feature_importance_plot/feat_imp5.jpg)
+For target #6
+![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/Feature_importance_plot/feat_imp6.jpg)
+For target #7
+![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/Feature_importance_plot/feat_imp7.jpg)
+For target #8
+![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/Feature_importance_plot/feat_imp8.jpg)
+For target #9
+![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/Feature_importance_plot/feat_imp9.jpg)
+For target #10
+![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/Feature_importance_plot/feat_imp10.jpg)
