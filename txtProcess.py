@@ -2,11 +2,11 @@ import numpy as np
 import pandas as pd
 import os
 
-filenames = os.listdir('/home/yixuan/Downloads/Phase_0_IEEE14')
+filenames = os.listdir('/Users/yixuansun/Documents/Research/PNNLrelated/14BUS_Modifited/Phase_0_Modified_IEEE14')
 filenames.remove('scorepara.csv')
 
 def extractCertainLines(startLine, endLine, scenarioNum):
-	dir_path = '/home/yixuan/Downloads/Phase_0_IEEE14'
+	dir_path = '/Users/yixuansun/Documents/Research/PNNLrelated/14BUS_Modifited/Phase_0_Modified_IEEE14'
 	dir_path = os.path.join(dir_path, scenarioNum)
 	txt_file = 'powersystem.raw'
 	features = []
@@ -19,8 +19,26 @@ def extractCertainLines(startLine, endLine, scenarioNum):
 	return oneDlist
 
 
+def findlines(scenarioNum):
+	dir_path = '/Users/yixuansun/Documents/Research/PNNLrelated/14BUS_Modifited/Phase_0_Modified_IEEE14'
+	dir_path = os.path.join(dir_path, scenarioNum)
+	txt_file = 'powersystem.raw'
+	headerRow = []
+	startRow = []
+	endRow = []
+	with open(os.path.join(dir_path, txt_file)) as file:
+		for num, line in enumerate(file):
+			line = line.strip()
+			if '/' in line:
+				headerRow.append(num)
+		for start, end in zip(headerRow[:-1], headerRow[1:]):
+			startRow.append(start)
+			endRow.append(end)
+	return	list(np.array(startRow) +1), list(np.array(endRow) - 1)
+
+
 def extractLines(startLine, endLine, scenarioNum):
-	dir_path = '/home/yixuan/Downloads/Phase_0_IEEE14'
+	dir_path = '/Users/yixuansun/Documents/Research/PNNLrelated/14BUS_Modifited/Phase_0_Modified_IEEE14'
 	dir_path = os.path.join(dir_path, scenarioNum)
 	txt_file = 'solution1.txt'
 	features = []
@@ -32,15 +50,11 @@ def extractLines(startLine, endLine, scenarioNum):
 	oneDlist = [item for sublist in features for item in sublist]
 	return oneDlist
 
-def makeFeautures(scenarioNum):
-	bus_data = extractCertainLines(4, 17, scenarioNum)
-	load_data = extractCertainLines(19, 29, scenarioNum)
-	fixed_shunt_data = extractCertainLines(31, 31, scenarioNum)
-	generator_data = extractCertainLines(33, 37, scenarioNum)
-	branch_data = extractCertainLines(39, 55, scenarioNum)
-	transformer_data = extractCertainLines(57, 68,scenarioNum)
-	feat = [bus_data, load_data, fixed_shunt_data, generator_data,
-			branch_data, transformer_data]
+def integrateFeat(scenarioNum):
+	startLine, endLine = findlines(scenarioNum)
+	feat = []
+	for i in range(len(startLine)):
+		feat.append(extractCertainLines(startLine[i], endLine[i], scenarioNum))
 	sampleFeatures = [item for sub in feat for item in sub]
 	for i, x in enumerate(sampleFeatures):
 		try:
@@ -58,7 +72,7 @@ def makeTargets(scenarioNum):
 	return finalTar
 
 def combineTogether(scenarioNum):
-	feat = makeFeautures(scenarioNum)
+	feat = integrateFeat(scenarioNum)
 	target = makeTargets(scenarioNum)
 	tmp = [feat, target]
 	final = [item for i in tmp for item in i]
@@ -74,4 +88,13 @@ for names in filenames:
 
 dataframe = pd.DataFrame(dataset)
 
-dataframe.to_csv('integratedDataset.csv')
+dataframe.to_csv('integratedDataset_modified.csv')
+
+
+
+
+
+
+
+
+
