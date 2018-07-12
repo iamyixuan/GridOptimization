@@ -7,11 +7,14 @@ from sklearn.multioutput import MultiOutputRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn import linear_model
 from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVR
+import matplotlib.pyplot as plt
 
 filename = 'integratedDataset.csv'
 dataset, colName = cleanData(filename)
 X = dataset.iloc[:,:42]
 y = dataset.iloc[:,42:]
+X.columns = list(range(1,43))
 
 
 
@@ -23,12 +26,20 @@ X_test = scaler.transform(X_test)
 #X_train, explainedVarianceRatio, X_test = principalComponent(X_train, X_test)
 
 
+rf1 = RandomForestRegressor(n_estimators = 500, n_jobs = -1, random_state = 42)
+rf1.fit(X, y.iloc[:,0])
 
-regressor = MultiOutputRegressor(linear_model.BayesianRidge(lambda_1 = 2))
-regressor.fit(X_train, y_train)
+#regressor = MultiOutputRegressor(linear_model.BayesianRidge())
 
+#regressor.fit(X_train, y
+feat_imp = pd.DataFrame({'importance': rf1.feature_importances_})
+feat_imp['Feature Index'] = X.columns
+feat_imp.sort_values(by = 'importance', ascending = True, inplace = True)
 
-y_pred = regressor.predict(X_test)
-score1 = regressor.score(X_test,y_test)
+plt.barh(range(len(feat_imp)), feat_imp['importance'], color = 'b', align = 'center')
+plt.yticks(range(len(feat_imp)), feat_imp['Feature Index'], size = 6)
+plt.xlabel('Feature importance')
+plt.ylabel('Index')
+plt.tight_layout()
 
-print ('The R^2 score is %.4f' % score1)
+plt.savefig('feat_imp1.jpg', format = 'jpg', dpi = 500)
