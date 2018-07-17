@@ -290,3 +290,24 @@ For target #9
 ![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/FeatureImportanceWithNames/feat_imp9.jpg)
 For target #10
 ![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/FeatureImportanceWithNames/feat_imp10.jpg)
+
+### Looking into the correlation between generator data and genenration dispatch data.
+
+Generator data consists of `QMax`, `QMin`, `PMax`, `PMin` for each bus, while generation dispatch data only contains `Q` and `P`. The scatter plots are to visulize the possible correlation between them. For each bus, 4 scatter plots are made. They are `PMax - P`, `PMin - P`, `QMax - Q` and `QMin - Q`. 
+
+Bus 01
+![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/scatterplots/BUS01_scatter.jpg)
+
+Bus 02
+![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/scatterplots/BUS02_scatter.jpg)
+
+Bus 03
+![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/scatterplots/BUS03_scatter.jpg)
+
+Bus 06
+![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/scatterplots/BUS06_scatter.jpg)
+
+Bus 08
+![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/scatterplots/BUS08_scatter.jpg)
+
+The plots do not indicate obvious correlation between the variables.
