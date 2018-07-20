@@ -332,7 +332,7 @@ There are 6 file generated, 3 for each type of dataset.
 The first attempt is to use local features only to fit predictive models. Same as the previous model on IEEE 14, Random Forest regressor with Muilt-output regressor is used. The following table shows the results.
 
 | Area Number | Coefficient of determination (Local Data) | Coefficient of determination (Global Data)|
-| ---------- |:--------------------------:|
+| ---------- |:--------------------------:|----|
 | 1 | 0.9751 |0.8716|
 | 2 | 0.8688 |0.9763|
 | 3 | 0.9743 |0.9747|
