@@ -318,6 +318,7 @@ The plots do not indicate obvious correlation between the variables.
 In order to explore the imporance of local features to local dispatch, a larger system IEEE RTS-96 is employed. Similar to the previous dataset (IEEE 14), RTS-96 contains 100 different scenaros in which there are RAW file, base solution and contingency solution. The contingency solution file `solution2.txt` is used in this work, where it takes into account 10 different contingencies and the corresponding generation dispatch. Therefore, based on the fact that 10 contingencies are different and independent, the sample size can be expanded to 1000 with each scenario having 10 different contingency situations. 
 
 RTS-96 system consists of three areas where the bus ID has the form 1xx, 2xx and 3xx. The alignment is shown in the following image.
+
 ![alt_text](https://github.com/sunyx1223/GridOptimization/blob/master/scatterplots/1-s2.0-S221053791400078X-gr3.jpg)
 
 Our objective is to explore whether local features, e.g. system operational data in area 1 with contingency information, is enough for local dispatch (dispatch for area 1 in this example). According to this requirement, the information extraction from the RAW file can be divided into two:
