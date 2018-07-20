@@ -12,7 +12,7 @@ More details at:
 * [Multi-target Regression: Problem transformation](#multi-target-regression)
 * [Neural Networks](#neural-networks)
 * [Some Modification in Progress](#some-modifications-in-progress)
-* [RTS96 with Contingency Data](#rts96-with-contingency-Data)
+* [RTS96 with Contingency Data](#rts96-with-contingency-data)
 
 ## Data Description
 IEEE 14-Bus (100 scenarios) dataset is employed. It contains 100 folders labeled *scenario_1* to *scenario_100*. These scenarios are each independent instances with no coupling to any of the other scenarios. Each scenario folder contains the following files:
@@ -319,6 +319,7 @@ In order to explore the imporance of local features to local dispatch, a larger 
 
 RTS-96 system consists of three areas where the bus ID has the form 1xx, 2xx and 3xx. The alignment is shown in the following image.
 ![alt_text](https://github.com/sunyx1223/GridOptimization/blob/master/scatterplots/1-s2.0-S221053791400078X-gr3.jpg)
+
 Our objective is to explore whether local features, e.g. system operational data in area 1 with contingency information, is enough for local dispatch (dispatch for area 1 in this example). According to this requirement, the information extraction from the RAW file can be divided into two:
 
 1. Only extracting local features and contingency data combined with local dispatch.
