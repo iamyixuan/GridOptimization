@@ -38,7 +38,13 @@ y.columns = ['Dis-Bus01-1-P', 'Dis-Bus01-1-Q',
 			 'Dis-Bus02-1-P', 'Dis-Bus02-1-Q',
 			 'Dis-Bus03-1-P', 'Dis-Bus03-1-Q']
 
-'''X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2,random_state = 42)
+
+'''
+------------
+Feautre importance exploration using RF
+---------
+'''
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2,random_state = 42)
 scaler = StandardScaler().fit(X_train)
 X_train = scaler.transform(X_train)
 X_test = scaler.transform(X_test)
@@ -61,8 +67,15 @@ plt.xlabel('Feature importance')
 plt.ylabel('Index')
 plt.tight_layout()
 
-plt.savefig('feat_imp10.jpg', format = 'jpg', dpi = 500)'''
+plt.savefig('feat_imp10.jpg', format = 'jpg', dpi = 500)
 
+
+
+'''
+---------------------
+scatter plots of related features/targets.
+---------------------
+'''
 plt.subplot(221)
 plt.scatter(X['Gen-Bus08-1-PMax'], y['Dis-Bus08-1-P'])
 plt.xlabel('Gen-Bus08-1-PMax')
