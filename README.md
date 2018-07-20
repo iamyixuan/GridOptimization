@@ -12,7 +12,7 @@ More details at:
 * [Multi-target Regression: Problem transformation](#multi-target-regression)
 * [Neural Networks](#neural-networks)
 * [Some Modification in Progress](#some-modifications-in-progress)
-* [RTS-96 with Contingency Data](#RTS-96-with-Contingency-Data)
+* [RTS96 with Contingency Data](#rts96-with-contingency-Data)
 
 ## Data Description
 IEEE 14-Bus (100 scenarios) dataset is employed. It contains 100 folders labeled *scenario_1* to *scenario_100*. These scenarios are each independent instances with no coupling to any of the other scenarios. Each scenario folder contains the following files:
@@ -313,7 +313,7 @@ Bus 08
 
 The plots do not indicate obvious correlation between the variables.
 
-## RTS-96 with Contingency Data
+## RTS96 with Contingency Data
 
 In order to explore the imporance of local features to local dispatch, a larger system IEEE RTS-96 is employed. Similar to the previous dataset (IEEE 14), RTS-96 contains 100 different scenaros in which there are RAW file, base solution and contingency solution. The contingency solution file `solution2.txt` is used in this work, where it takes into account 10 different contingencies and the corresponding generation dispatch. Therefore, based on the fact that 10 contingencies are different and independent, the sample size can be expanded to 1000 with each scenario having 10 different contingency situations. 
 
