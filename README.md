@@ -311,3 +311,28 @@ Bus 08
 ![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/scatterplots/BUS08_scatter.jpg)
 
 The plots do not indicate obvious correlation between the variables.
+
+## RTS-96 with Contingency Data
+
+In order to explore the imporance of local features to local dispatch, a larger system IEEE RTS-96 is employed. Similar to the previous dataset (IEEE 14), RTS-96 contains 100 different scenaros in which there are RAW file, base solution and contingency solution. The contingency solution file `solution2.txt` is used in this work, where it takes into account 10 different contingencies and the corresponding generation dispatch. Therefore, based on the fact that 10 contingencies are different and independent, the sample size can be expanded to 1000 with each scenario having 10 different contingency situations. 
+
+RTS-96 system consists of three areas where the bus ID has the form 1xx, 2xx and 3xx. The alignment is shown in the following image.
+![alt_text](https://github.com/sunyx1223/GridOptimization/blob/master/scatterplots/1-s2.0-S221053791400078X-gr3.jpg)
+Our objective is to explore whether local features, e.g. system operational data in area 1 with contingency information, is enough for local dispatch (dispatch for area 1 in this example). According to this requirement, the information extraction from the RAW file can be divided into two:
+
+1. Only extracting local features and contingency data combined with local dispatch.
+2. Extracting all features of 3 areas and contingency data combined with local dispatch.
+
+There are 6 file generated, 3 for each type of dataset. 
+
+### Predictive Model 
+
+The first attempt is to use local features only to fit predictive models. Same as the previous model on IEEE 14, Random Forest regressor with Muilt-output regressor is used. The following table shows the results.
+
+| Area Number | Coefficient of determination |
+| ---------- |:--------------------------:|
+| 1 | 0.9751 |
+| 2 | 0.8688 |
+| 3 | 0.9743 |
+
+Area 1 & 3 show pretty good predictive power just using local features while its local features for area 2 seem not to be enough. If looking back at the alignment map of RTS-96, area 2 is connected with both area 1 & 3, while area 1 and area 3 are relatively independent. An assumption is that the dispatch of area 2 is more dependent on information other than its local data. 
