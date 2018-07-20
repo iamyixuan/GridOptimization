@@ -331,10 +331,12 @@ There are 6 file generated, 3 for each type of dataset.
 
 The first attempt is to use local features only to fit predictive models. Same as the previous model on IEEE 14, Random Forest regressor with Muilt-output regressor is used. The following table shows the results.
 
-| Area Number | Coefficient of determination |
+| Area Number | Coefficient of determination (Local Data) | Coefficient of determination (Global Data)|
 | ---------- |:--------------------------:|
-| 1 | 0.9751 |
-| 2 | 0.8688 |
-| 3 | 0.9743 |
+| 1 | 0.9751 |0.8716|
+| 2 | 0.8688 |0.9763|
+| 3 | 0.9743 |0.9747|
 
 Area 1 & 3 show pretty good predictive power just using local features while its local features for area 2 seem not to be enough. If looking back at the alignment map of RTS-96, area 2 is connected with both area 1 & 3, while area 1 and area 3 are relatively independent. An assumption is that the dispatch of area 2 is more dependent on information other than its local data. 
+
+If using all information available to predict local generation dispatch, the results in the table show that for area 1, gloabl information may be redundant for the score decreases, however, the global information drastically helps improve the model predictive power for area 2. The gobal information has little impact on the dispatch prediction in area 3.
