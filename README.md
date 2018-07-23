@@ -340,4 +340,19 @@ The first attempt is to use local features only to fit predictive models. Same a
 
 Area 1 & 3 show pretty good predictive power just using local features while its local features for area 2 seem not to be enough. If looking back at the alignment map of RTS-96, area 2 is connected with both area 1 & 3, while area 1 and area 3 are relatively independent. An assumption is that the dispatch of area 2 is more dependent on information other than its local data. 
 
-If using all information available to predict local generation dispatch, the results in the table show that for area 1, gloabl information may be redundant for the score decreases, however, the global information drastically helps improve the model predictive power for area 2. The gobal information has little impact on the dispatch prediction in area 3.
+If using all information available to predict local generation dispatch, the results in the table show that for area 1, global information may be redundant for the score decreases, however, the global information drastically helps improve the model predictive power for area 2. The gobal information has little impact on the dispatch prediction in area 3.
+
+### Area Feature Importance
+
+To look into the importance of local features to their generation dispatch, feature importance exploration based on Random Forest Regressor is conducted. According to the previous section, the predictive power of Random Forest is good enough to trust the feature importance ranking from the trained models. In order to tell the different areas, the data is made by combining data of 3 areas in order, where the first 168 columns are features from area 1, the next 168 columns are from area 3, and the last 164 columns are from area 3. I explored the individual feature as well as the area averages importance to different area targets, s.t. area 1, 2 & 3. The following plots show the results of this exploration.
+
+1. Area 1 Dispatch as Targets.
+![alt_text](https://github.com/sunyx1223/GridOptimization/blob/master/RTS96/feature%20importance/feat_imp_1.jpg)
+2. Area 2 Dispatch as Targets.
+![alt_text](https://github.com/sunyx1223/GridOptimization/blob/master/RTS96/feature%20importance/feat_imp_2.jpg)
+3. Area 3 Dispatch as Targets.
+![alt_text](https://github.com/sunyx1223/GridOptimization/blob/master/RTS96/feature%20importance/feat_imp_3.jpg)
+
+The feature importance plot for area 1 dispatch shows that on average, the features from area 2 are relatively more important. The plot for are 2 shows the features from area 2 are relatively more important. And plot for area 3 shows feature from area 1. However, the difference between areas are minor. 
+
+Based on the predictive power of different models in the table, using only features frim area 1 or area 3 for their corresponding dispatches performs better than using all the information, while for area 2, it seems to be better if using all the information. 
