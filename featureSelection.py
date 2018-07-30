@@ -3,6 +3,14 @@ import pandas as pd
 import os
 from sklearn.decomposition import PCA
 
+'''
+-------------
+clean the data by taking out
+the same feature values for 
+all samples.
+-------------
+'''
+
 def cleanData(filename):
 	data = pd.read_csv(filename, header = 0)
 	data = data.iloc[:,1:]
@@ -27,6 +35,11 @@ def cleanData(filename):
 	-------------------------
 	'''
 
+'''
+-----------------
+Principal component analysis
+-----------------
+'''
 def principalComponent(train, test):
 	pca = PCA(n_components = 42)
 	trainData = pca.fit_transform(train)

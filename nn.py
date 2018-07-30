@@ -8,7 +8,7 @@ from sklearn.metrics import explained_variance_score
 from sklearn.utils import resample
 #only 100 samples so there is no need to batch data.
 
-n_input = 42
+n_input = 36
 n_hidden1 = 500
 n_hidden2 = 800
 n_hidden3 = 50
@@ -20,23 +20,23 @@ BATCH_SIZE = 100
 
  
 
-filename = 'integratedDataset.csv'
+filename = 'integratedDataset_modified.csv'
 dataset, colName = cleanData(filename)
 dataResampled = resample(dataset, n_samples = 1000)
 
-X = dataResampled.iloc[:,:42]
-y = dataResampled.iloc[:,42:]
+X = dataResampled.iloc[:,:36] # adjust according to the current number of targets.
+y = dataResampled.iloc[:,36:]
 
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2,random_state = 42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2,random_state = 42) # splitting dataset into training and testing.
 
-scaler = StandardScaler().fit(X_train)
+scaler = StandardScaler().fit(X_train) # standardizing features.
 X_train = scaler.transform(X_train)
-X_test = scaler.transform(X_test)
+X_test = scaler.transform(X_test)# apply the same mean and variance from traning set to testing set.
 y_train = np.asarray(y_train).reshape(-1,n_output)
 y_test = np.asarray(y_test).reshape(-1,n_output)
 
-num_batches = int(len(X_train)/BATCH_SIZE*1.0)
+num_batches = int(len(X_train)/BATCH_SIZE*1.0) # making batches 
 print num_batches
 
 
