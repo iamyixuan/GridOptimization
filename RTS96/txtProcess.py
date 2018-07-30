@@ -5,7 +5,7 @@ import os
 
 
 
-path = '/Users/yixuansun/Documents/Research/PNNLrelated/Phase_0_RTS96'
+path = '/Users/yixuansun/Documents/Research/PNNLrelated/M_RTS96/Phase_0_Modified_RTS96'
 filenames = os.listdir(path)
 filenames.remove('scorepara.csv')
 
@@ -16,7 +16,7 @@ def extractCertainLines(startLine, endLine, scenarioNum):
 	features = []
 	with open(os.path.join(dir_path, txt_file)) as file:
 		for i, line in enumerate(file):
-			if i <= endLine - 1 and i >= startLine - 1:
+			if i <= endLine and i >= startLine:
 				newLine = line.strip().replace(' ','').replace("'","").split(',')
 				features.append(newLine)
 	oneDlist = [item for sublist in features for item in sublist]

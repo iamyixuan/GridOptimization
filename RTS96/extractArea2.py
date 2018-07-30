@@ -4,12 +4,20 @@ import os
 from featureSelection import cleanData
 
 
-path = '/Users/yixuansun/Documents/Research/PNNLrelated/Phase_0_RTS96'
+path = '/Users/yixuansun/Documents/Research/PNNLrelated/M_RTS96/Phase_0_Modified_RTS96' # file dir path
 filenames = os.listdir(path)
 filenames.remove('scorepara.csv')
-filenames.remove('.DS_Store')
+num_contingency = 10
 
+#filenames.remove('.DS_Store')
 
+'''
+--------------------
+Function used to convert 
+data type to float;
+if non-convertable, pass.
+--------------------
+'''
 def convertingToNum(elem):
 	try:
 		elem = float(elem)
@@ -18,6 +26,13 @@ def convertingToNum(elem):
 	return elem
 
 
+'''
+------------------
+Find header rows
+Return the first and last
+row between headers.
+------------------
+'''
 def findlines(scenarioNum):
 	dir_path = path
 	dir_path = os.path.join(dir_path, scenarioNum)
@@ -36,7 +51,13 @@ def findlines(scenarioNum):
 	return	list(np.array(startRow) +1), list(np.array(endRow) - 1)
 
 
-
+'''
+----------------
+Extracting block between
+header with bus ID starting 
+with 2 (information of area 2)
+----------------
+'''
 def extractCertainLines(startLine, endLine, scenarioNum):
 	dir_path = path
 	dir_path = os.path.join(dir_path, scenarioNum)
@@ -46,7 +67,7 @@ def extractCertainLines(startLine, endLine, scenarioNum):
 		for i, line in enumerate(file):
 			newLine = line.strip().replace(' ','').replace("'","").split(',')
 			newLine = map(convertingToNum, newLine)
-			if i <= endLine - 1 and i >= startLine - 1 and newLine[0] >= 200 and newLine[0] < 300: # area one will start with 1XX
+			if i <= endLine  and i >= startLine  and newLine[0] >= 200 and newLine[0] < 300: # area one will start with 1XX
 				features.append(newLine)
 	oneDlist = [item for sublist in features for item in sublist]
 	return oneDlist
@@ -92,16 +113,22 @@ def ContGenDispatch(ContNum,scenarioNum):
 
 def feat_target(scenarioNum):
 	sample = []
-	for i in range(10):
+	for i in range(num_contingency):
 		feat = combineContandFeat(i+1, scenarioNum)
 		target = ContGenDispatch(i+1, scenarioNum)
 		sam = feat + target
 		sample.append(sam)
 	return sample
 
+'''
+--------------------
+Creating dataset containing
+1000 sample and saving it to a 
+csv file.
+--------------------
+'''
 
-
-# creating files containing 1000 samples
+#creating files containing 1000 samples
 # area1Data = []
 # for file in filenames:
 # 		area1Data.append(feat_target(file))
@@ -126,7 +153,7 @@ data = data.drop(catData, axis = 1) # dropping all categorical features because 
 nunique = data.apply(pd.Series.nunique) # find out the repeat data.
 colsToDrop = nunique[nunique == 1].index
 data = data.drop(colsToDrop, axis = 1)# drop out the columns containing the same value.
-print data
+print len(data), len(data.iloc[0])
 data.to_csv('cleanedArea2.csv')
 
 
