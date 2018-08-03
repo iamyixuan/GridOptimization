@@ -334,13 +334,11 @@ The first attempt is to use local features only to fit predictive models. Same a
 
 | Area Number | Coefficient of determination (Local Data) | Coefficient of determination (Global Data)|
 |:-----:|:-----:|:----:|
-| 1 | 0.8739 | 0.8770 |
-| 2 | 0.9761 | 0.9745 |
-| 3 | 0.9747 | 0.9749 |
+| 1 | 0.8739 | 0.8627 |
+| 2 | 0.9761 | 0.9786 |
+| 3 | 0.9747 | 0.9788 |
 
-Area 1 & 3 show pretty good predictive power just using local features while its local features for area 2 seem not to be enough. If looking back at the alignment map of RTS-96, area 2 is connected with both area 1 & 3, while area 1 and area 3 are relatively independent. An assumption is that the dispatch of area 2 is more dependent on information other than its local data. 
-
-If using all information available to predict local generation dispatch, the results in the table show that for area 1, global information may be redundant for the score decreases, however, the global information drastically helps improve the model predictive power for area 2. The gobal information has little impact on the dispatch prediction in area 3.
+The results indicate that both using local and using global information can yield high prediction accuracy. Area 2 & 3 show higher accuracy when using global features while area 1 shows higher accuracy when using local features. The score different between using local and global features in each area is small.
 
 ### Area Feature Importance
 
