@@ -334,9 +334,9 @@ The first attempt is to use local features only to fit predictive models. Same a
 
 | Area Number | Coefficient of determination (Local Data) | Coefficient of determination (Global Data)|
 |:-----:|:-----:|:----:|
-| 1 | 0.9751 | 0.8716 |
-| 2 | 0.8688 | 0.9763 |
-| 3 | 0.9743 | 0.9747 |
+| 1 | 0.8739 | 0.8770 |
+| 2 | 0.9761 | 0.9745 |
+| 3 | 0.9747 | 0.9749 |
 
 Area 1 & 3 show pretty good predictive power just using local features while its local features for area 2 seem not to be enough. If looking back at the alignment map of RTS-96, area 2 is connected with both area 1 & 3, while area 1 and area 3 are relatively independent. An assumption is that the dispatch of area 2 is more dependent on information other than its local data. 
 
