@@ -334,9 +334,9 @@ The first attempt is to use local features only to fit predictive models. Same a
 
 | Area Number | Coefficient of determination (Local Data) | Coefficient of determination (Global Data)|
 |:-----:|:-----:|:----:|
-| 1 | 0.8739 | 0.8627 |
-| 2 | 0.9761 | 0.9786 |
-| 3 | 0.9747 | 0.9788 |
+| 1 | 0.8769 | 0.8735 |
+| 2 | 0.9753 | 0.9765 |
+| 3 | 0.9748 | 0.9749 |
 
 The results indicate that both using local and using global information can yield high prediction accuracy. Area 2 & 3 show higher accuracy when using global features while area 1 shows higher accuracy when using local features. The score different between using local and global features in each area is small.
 
