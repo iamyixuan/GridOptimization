@@ -137,7 +137,7 @@ for names in filenames:
 # save the file
 dataframe = pd.DataFrame(dataset)
 
-dataframe.to_csv('integratedDataset_modified.csv')
+dataframe.to_csv('integratedDataset_modified.csv', index = False) # set index to False otherwise there will be an extra column when reread it.
 
 
 
