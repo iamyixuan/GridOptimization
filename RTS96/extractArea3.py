@@ -4,19 +4,12 @@ import os
 from featureSelection import cleanData
 
 
-path = '/Users/yixuansun/Documents/Research/PNNLrelated/M_RTS96/Phase_0_Modified_RTS96'
+path = '/Users/yixuansun/Documents/Research/PNNLrelated/Phase_0_RTS96'
 filenames = os.listdir(path)
 filenames.remove('scorepara.csv')
-#filenames.remove('.DS_Store')
-num_contingency = 10
+filenames.remove('.DS_Store')
 
-'''
---------------------
-Function used to convert 
-data type to float;
-if non-convertable, pass.
---------------------
-'''
+
 def convertingToNum(elem):
 	try:
 		elem = float(elem)
@@ -24,13 +17,7 @@ def convertingToNum(elem):
 		pass
 	return elem
 
-'''
-------------------
-Find header rows
-Return the first and last
-row between headers.
-------------------
-'''
+
 def findlines(scenarioNum):
 	dir_path = path
 	dir_path = os.path.join(dir_path, scenarioNum)
@@ -48,13 +35,7 @@ def findlines(scenarioNum):
 			endRow.append(end)
 	return	list(np.array(startRow) +1), list(np.array(endRow) - 1)
 
-'''
-----------------
-Extracting block between
-header with bus ID starting 
-with 3 (information of area 3)
-----------------
-'''
+
 
 def extractCertainLines(startLine, endLine, scenarioNum):
 	dir_path = path
@@ -111,20 +92,14 @@ def ContGenDispatch(ContNum,scenarioNum):
 
 def feat_target(scenarioNum):
 	sample = []
-	for i in range(9):
+	for i in range(10):
 		feat = combineContandFeat(i+1, scenarioNum)
 		target = ContGenDispatch(i+1, scenarioNum)
 		sam = feat + target
 		sample.append(sam)
 	return sample
 
-'''
---------------------
-Creating dataset containing
-1000 sample and saving it to a 
-csv file.
---------------------
-'''
+
 
 #creating files containing 1000 samples
 # area1Data = []
@@ -138,9 +113,9 @@ csv file.
 
 # dataframe = pd.DataFrame(area1FullData)
 
-# dataframe.to_csv('area3FullData.csv')
+# dataframe.to_csv('area3Raw.csv', index = False)
 
-data = pd.read_csv('area3FullData.csv', header = 0)
+data = pd.read_csv('area3Raw.csv', header = 0)
 data = data.iloc[:,1:]
 data = data.dropna(axis = 1)
 cols = data.columns
@@ -151,6 +126,6 @@ data = data.drop(catData, axis = 1) # dropping all categorical features because 
 nunique = data.apply(pd.Series.nunique) # find out the repeat data.
 colsToDrop = nunique[nunique == 1].index
 data = data.drop(colsToDrop, axis = 1)# drop out the columns containing the same value.
-
-data.to_csv('cleanedArea3.csv')
+print data
+data.to_csv('cleanedArea3.csv', index = False)
 

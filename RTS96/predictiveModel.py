@@ -9,7 +9,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
 import matplotlib.pyplot as plt
 
-filename = 'full_to_area1.csv'
+filename = 'cleanedArea3.csv'
 df = pd.read_csv(filename)
 X = df.iloc[:,:-33]
 print len(X.columns)

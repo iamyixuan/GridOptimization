@@ -46,7 +46,7 @@ def extractCertainLines(startLine, endLine, scenarioNum):
 		for i, line in enumerate(file):
 			newLine = line.strip().replace(' ','').replace("'","").split(',')
 			newLine = map(convertingToNum, newLine)
-			if i <= endLine - 1 and i >= startLine - 1:# area one will start with 1XX
+			if i <= endLine  and i >= startLine:
 				features.append(newLine)
 	oneDlist = [item for sublist in features for item in sublist]
 	return oneDlist

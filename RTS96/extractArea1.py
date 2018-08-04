@@ -4,18 +4,12 @@ import os
 from featureSelection import cleanData
 
 
-path = '/Users/yixuansun/Documents/Research/PNNLrelated/M_RTS96/Phase_0_Modified_RTS96'
+path = '/Users/yixuansun/Documents/Research/PNNLrelated/Phase_0_RTS96'
 filenames = os.listdir(path)
 filenames.remove('scorepara.csv')
-#filenames.remove('.DS_Store')
-num_contingency = 10
-'''
---------------------
-Function used to convert 
-data type to float;
-if non-convertable, pass.
---------------------
-'''
+filenames.remove('.DS_Store')
+
+
 def convertingToNum(elem):
 	try:
 		elem = float(elem)
@@ -23,13 +17,6 @@ def convertingToNum(elem):
 		pass
 	return elem
 
-'''
-------------------
-Find header rows
-Return the first and last
-row between headers.
-------------------
-'''
 
 def findlines(scenarioNum):
 	dir_path = path
@@ -48,13 +35,7 @@ def findlines(scenarioNum):
 			endRow.append(end)
 	return	list(np.array(startRow) +1), list(np.array(endRow) - 1)
 
-'''
-----------------
-Extracting block between
-header with bus ID starting 
-with 1 (information of area 1)
-----------------
-'''
+
 
 def extractCertainLines(startLine, endLine, scenarioNum):
 	dir_path = path
@@ -75,9 +56,9 @@ def extractCertainLines(startLine, endLine, scenarioNum):
 
 
 '''
-------------------------------------------------
+-------------
 The following code is to extract contingency info
-------------------------------------------------
+-------------
 '''
 def extractContingency(ContNum, scenarioNum):
 	fileDir = os.path.join(path, scenarioNum)
@@ -104,51 +85,37 @@ def ContGenDispatch(ContNum,scenarioNum):
 		for i, line in enumerate(f):
 			newLine = line.strip().replace(' ','').replace("'","").split(',')
 			newLine = map(convertingToNum, newLine)
-			if i >=2 and i <= 991 and newLine[0] == ContNum and newLine[2] >= 100 and newLine[2] < 200: # 2, 991 are the rows between which the dispatch data is stored
+			if i >=2 and i <= 991 and newLine[0] == ContNum and newLine[2] >= 100 and newLine[2] < 200:
 				GenDispatch.append(newLine[-1])
 	return GenDispatch
 
 
 def feat_target(scenarioNum):
 	sample = []
-	for i in range(num_contingency):
-		feat = combineContandFeat(i+1, scenarioNum)
+	for i in range(10):
+		feat = combineContandFeat(i+1, scenarioNum) # because contingency number starts with 1 not 0.
 		target = ContGenDispatch(i+1, scenarioNum)
 		sam = feat + target
 		sample.append(sam)
 	return sample
 
 
-'''
---------------------
-Creating dataset containing
-1000 sample and saving it to a 
-csv file.
---------------------
-'''
 
-# creating files containing 1000 samples
-'''area1Data = []
-for file in filenames:
-		area1Data.append(feat_target(file))
+#creating files containing 1000 samples
+# area1Data = []
+# for file in filenames:
+# 		area1Data.append(feat_target(file))
 
-area1FullData = [s for item in area1Data for s in item]
+# area1FullData = [s for item in area1Data for s in item]
 
-print len(area1FullData), len(area1FullData[0])
+# print len(area1FullData), len(area1FullData[0])
 
 
-dataframe = pd.DataFrame(area1FullData)
+# dataframe = pd.DataFrame(area1FullData)
 
-dataframe.to_csv('area1FullData.csv')
+# dataframe.to_csv('area1Raw.csv', index = False)
 
-'''
-
-'''
---------------------------
-Cleaning the save dataset
--------------------------
-'''
-data = pd.read_csv('area1FullData.csv', header = 0)
+data = pd.read_csv('area1Raw.csv')
 data = data.iloc[:,1:]
 data = data.dropna(axis = 1)
 cols = data.columns
@@ -158,11 +125,13 @@ data = data.drop(catData, axis = 1) # dropping all categorical features because 
 
 nunique = data.apply(pd.Series.nunique) # find out the repeat data.
 colsToDrop = nunique[nunique == 1].index
-data = data.drop(colsToDrop, axis = 1)
-print len(data), len(data.iloc[0]) # drop out the columns containing the same value.
-data.to_csv('cleanedArea1.csv')
+data = data.drop(colsToDrop, axis = 1)# drop out the columns containing the same value.
+print data 
+data.to_csv('cleanedArea1.csv', index = False)
 
-#df1.to_csv('cleanedArea1.csv')
+
+
+
 
 
 
