@@ -338,7 +338,7 @@ The first attempt is to use local features only to fit predictive models. Same a
 | 2 | 0.9753 | 0.9765 |
 | 3 | 0.9748 | 0.9749 |
 
-The results indicate that both using local and using global information can yield high prediction accuracy. Area 2 & 3 show higher accuracy when using global features while area 1 shows higher accuracy when using local features. The score different between using local and global features in each area is small.
+The results indicate that both using local and using global information can yield high prediction accuracy. Area 2 & 3 show higher accuracy when using global features while area 1 shows higher accuracy when using local features. The score different between using local and global features in each area is small. The local features are sufficient enough to make accurate prediction camparing with using global information. 
 
 ### Area Feature Importance
 
@@ -354,3 +354,24 @@ To look into the importance of local features to their generation dispatch, feat
 The feature importance plot for area 1 dispatch shows that on average, the features from area 2 are relatively more important. The plot for are 2 shows the features from area 2 are relatively more important. And plot for area 3 shows feature from area 1. However, the difference between areas are minor. 
 
 Based on the predictive power of different models in the table, using only features frim area 1 or area 3 for their corresponding dispatches performs better than using all the information, while for area 2, it seems to be better if using all the information. 
+
+### Permutation Importance
+The varibale or feature importance measures in default random forest have bias and are not reliable when potential predictior variable vary scale in their measurement or their number of categories. For high dimensional data like the dataset used in this work, a more reliable feature importance measure is permutation feature importance. 
+
+The mechanism is to record a baseline score (coefficient of determination, in this case) on out-of-bag samples through random forest, then permute the column values of a single predictor feature and then pass all test samples back through the Random Forest and recompute the score. 
+
+The following are the permutation importance plots for generation dispatch in different areas. The red bar in each plot represents the importance of a randomly genenrated column to verify the reliability of permutation importance measure. The randomly generated columns are expected to have low or even the lowerest importance among other features. 
+
+1. Permutation importance for dispatch in area 1.
+![alt texst](https://github.com/sunyx1223/GridOptimization/blob/master/RTS96/permutation_imp/per_imp_1.jpg)
+
+2. Permuatation importance for dispatch in area 2.
+![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/RTS96/permutation_imp/per_imp_2.jpg)
+
+3. Permutation importance for dispatch in area 3.
+![alt text](https://github.com/sunyx1223/GridOptimization/blob/master/RTS96/permutation_imp/per_imp_3.jpg)
+
+The permutation importance results show that for the generation dispatch in area 1, on average, the most important features are in area 2. Meanwhile, for generation dispatch in area 2 & 3, the most important features on average are their corresponding local features. Note the importance of the randomly generated columns is negative for all three areas, which validates the reliability of the permutation importance method. 
+
+
+
