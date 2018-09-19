@@ -150,5 +150,3 @@ plt.xlabel('Area Importance Average')
 plt.ylabel('Area Number')
 plt.tight_layout()
 plt.savefig('feat_imp_3.jpg', format = 'jpg', dpi = 300)
-
-

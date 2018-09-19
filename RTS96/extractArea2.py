@@ -127,19 +127,3 @@ colsToDrop = nunique[nunique == 1].index
 data = data.drop(colsToDrop, axis = 1)# drop out the columns containing the same value.
 print data
 data.to_csv('cleanedArea2.csv', index = False)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
