@@ -9,7 +9,7 @@ filenames = os.listdir(path)
 filenames.remove('scorepara.csv')
 filenames.remove('.DS_Store')
 
-
+print filenames[0]
 def convertingToNum(elem):
 	try:
 		elem = float(elem)
@@ -99,7 +99,10 @@ def feat_target(scenarioNum):
 		sample.append(sam)
 	return sample
 
-
+'''
+Run the following block to create
+extracted dataset.
+'''
 
 #creating files containing 1000 samples
 # area1Data = []
@@ -115,6 +118,12 @@ def feat_target(scenarioNum):
 
 # dataframe.to_csv('area1Raw.csv', index = False)
 
+
+'''
+The following code is to perform
+data clearning.
+'''
+
 data = pd.read_csv('area1Raw.csv')
 data = data.iloc[:,1:]
 data = data.dropna(axis = 1)
@@ -126,24 +135,5 @@ data = data.drop(catData, axis = 1) # dropping all categorical features because 
 nunique = data.apply(pd.Series.nunique) # find out the repeat data.
 colsToDrop = nunique[nunique == 1].index
 data = data.drop(colsToDrop, axis = 1)# drop out the columns containing the same value.
-print data 
-data.to_csv('cleanedArea1.csv', index = False)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+print (data) 
+data.to_csv('cleanedArea1.csv', index = False) # set index = False in order to prevent an extra index column when reading.
