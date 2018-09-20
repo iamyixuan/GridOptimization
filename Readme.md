@@ -40,4 +40,4 @@ For local feature extraction, the implementation of data preprocessing can be fo
 The random forest regression has been adopted for both local data and global data to fit the corresponding generation dispatch. The implementation can be found in [`predictiveModel.py`](./RTS96/predictiveModel.py).
 
 ### Feature importance
-In order to explore the importance of local features in training process, permutation feature importance([`RTS96/permutation_imp.py`](./RTS96/permutation_imp.py)) is used in the paper.
+In order to explore the importance of local features in training process, permutation feature importance([`permutation_imp.py`](./RTS96/permutation_imp.py)) is used in the paper.
