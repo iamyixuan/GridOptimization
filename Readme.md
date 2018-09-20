@@ -24,7 +24,7 @@ is comparable to the results obtained with global features.
 
 The objective of GO competition is to accelerate the development of transformational and disruptive methods for solving power system optimization problems, including Preventative Security Constrained AC Optimal Power, where a generation dispatch at the least cost to meet system load in the base case is needed. This project is an attempt to tackle this problem using machine learning regression algorithms.
 
-## Dataset
+### Dataset
 The dataset employed for the main part of this paper is [`IEEE RTS96`](https://gocompetition.energy.gov/sites/default/files/dataset/Phase_0_RTS96.zip) system, where there are 100 scenarios and 10 contingency conditions. The operational data is stored in `RAW` file and the solution to the generation dispatch is in solution files.
 
 ### Data preprocessing
@@ -35,3 +35,9 @@ The data preprocessing part consists of 4 steps:
 4. Standardizing data.
 
 For local feature extraction, the implementation of data preprocessing can be found in [`extractArea1.py`](./RTS96/extractArea1.py). The local features from different areas are concatenated in [`feat_imp.py`](./RTS96/feat_imp.py) to generate the global features.
+
+### Random forest
+The random forest regression has been adopted for both local data and global data to fit the corresponding generation dispatch. The implementation can be found in [`predictiveModel.py`](./RTS96/predictiveModel.py).
+
+### Feature importance
+In order to explore the importance of local features in training process, permutation feature importance([`RTS96/permutation_imp.py`](./RTS96/permutation_imp.py)) is used in the paper.
