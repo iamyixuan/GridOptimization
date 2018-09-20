@@ -41,3 +41,6 @@ The random forest regression has been adopted for both local data and global dat
 
 ### Feature importance
 In order to explore the importance of local features in training process, permutation feature importance([`permutation_imp.py`](./RTS96/permutation_imp.py)) is used in the paper.
+
+### Sobol sensitivity analysis
+A global sensitivity analysis is conducted on trained models to find out the contribution of features and their interaction to the model outputs. The implementation can be found in [`sobol_SA01.py`](./RTS96/sobol_SA01.py)
